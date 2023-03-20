@@ -1,11 +1,17 @@
 import fs from 'fs/promises';
+import path from 'path';
+import process from 'process';
+import CryptoJS from 'crypto-js';
 import { encrypt, decrypt } from './encryption';
 
 export default class DatabaseAdapter {
     private filePath: string;
 
-    constructor(filePath: string) {
-        this.filePath = filePath;
+    constructor(databaseName: string) {
+        this.filePath = path.join(
+            process.env.DB_DIRECTORY!,
+            CryptoJS.MD5(databaseName).toString()
+        );
     }
 
     async read(): Promise<any> {
@@ -14,7 +20,7 @@ export default class DatabaseAdapter {
         try {
             result = await fs.readFile(this.filePath);
         } catch (e) {
-
+            return '';
         }
 
         return JSON.parse(decrypt(<string>result?.toString()))

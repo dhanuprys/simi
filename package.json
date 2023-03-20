@@ -3,24 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "next start",
+    "start": "APP_ENV=production node server.js",
     "lint": "next lint"
   },
   "dependencies": {
     "@types/crypto-js": "^4.1.1",
+    "@types/jsonwebtoken": "^9.0.1",
     "@types/lowdb": "^1.0.11",
     "@types/node": "18.15.3",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "crypto-js": "^4.1.1",
+    "dotenv": "^16.0.3",
+    "jsonwebtoken": "^9.0.0",
     "lowdb": "^5.1.0",
     "lowdb-encryption": "^0.1.0",
+    "nanoid": "^4.0.1",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "routeros-node": "^0.1.0",
+    "socket.io": "^4.6.1",
     "typescript": "5.0.2"
   },
   "devDependencies": {

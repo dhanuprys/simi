@@ -1,1 +1,10 @@
-function _0x3748(_0x495308,_0x5a070a){const _0x25d045=_0x25d0();return _0x3748=function(_0x374892,_0x52b993){_0x374892=_0x374892-0x1d1;let _0x3d6980=_0x25d045[_0x374892];return _0x3d6980;},_0x3748(_0x495308,_0x5a070a);}const _0x44391f=_0x3748;(function(_0x366a78,_0x43550e){const _0x26bd8d=_0x3748,_0x1e5144=_0x366a78();while(!![]){try{const _0x54c45c=-parseInt(_0x26bd8d(0x1da))/0x1+-parseInt(_0x26bd8d(0x1d7))/0x2*(parseInt(_0x26bd8d(0x1d4))/0x3)+parseInt(_0x26bd8d(0x1dd))/0x4*(-parseInt(_0x26bd8d(0x1dc))/0x5)+-parseInt(_0x26bd8d(0x1d6))/0x6+parseInt(_0x26bd8d(0x1db))/0x7+parseInt(_0x26bd8d(0x1d2))/0x8+parseInt(_0x26bd8d(0x1d9))/0x9;if(_0x54c45c===_0x43550e)break;else _0x1e5144['push'](_0x1e5144['shift']());}catch(_0x5581d2){_0x1e5144['push'](_0x1e5144['shift']());}}}(_0x25d0,0x30410));import _0x242098 from'crypto-js';const key=_0x44391f(0x1d8);export function encrypt(_0x2a6f02){const _0x4c4e6f=_0x44391f;return _0x242098[_0x4c4e6f(0x1d3)][_0x4c4e6f(0x1de)](_0x2a6f02,key)[_0x4c4e6f(0x1d5)]();}export function decrypt(_0x151aaa){const _0x4b146c=_0x44391f;return _0x242098['AES']['decrypt'](_0x151aaa,key)['toString'](_0x242098[_0x4b146c(0x1d1)]['Utf8']);}function _0x25d0(){const _0x4031da=['8y/B?E(H+MbPeShVmYq3t6w9z$C&F)J@','3954033iYtLyK','15064pMPcXL','1052919hOAbaM','239155nscdYp','20ZqhUEm','encrypt','enc','3025560yexVjG','AES','9oKUfxK','toString','914280XpAJDI','242468SHXbVS'];_0x25d0=function(){return _0x4031da;};return _0x25d0();}
+import CryptoJS from 'crypto-js';
+import process from 'process';
+
+export function encrypt(text: string): string {
+    return CryptoJS.AES.encrypt(text, process.env.DB_CREDENTIAL!).toString();
+}
+
+export function decrypt(text: string): string {
+    return CryptoJS.AES.decrypt(text, process.env.DB_CREDENTIAL!).toString(CryptoJS.enc.Utf8);
+}
