@@ -1,9 +1,9 @@
-import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import process from 'process';
 import { Database_User, Database_UserList, Request_Login } from '@/interface';
 import { formInvalid, responseBuilder } from '@/libs/middleware';
 import Database, { LowMix } from '@/libs/Database';
+import log from '@/libs/Logging';
 import CryptoJS from 'crypto-js';
 
 export async function POST(request: Request) {
@@ -12,6 +12,7 @@ export async function POST(request: Request) {
     let body: Request_Login;
     let found: boolean = false;
     let jwtSign: string;
+    let cookieMaxAge;
 
     try {
         body = await request.json();
@@ -28,7 +29,9 @@ export async function POST(request: Request) {
 
         if (
             user!.username === body.username 
-            && CryptoJS.AES.decrypt(user!.password, process.env.APP_KEY!).toString(CryptoJS.enc.Utf8) === body.password
+            && CryptoJS.AES.decrypt(
+                user!.password, process.env.APP_KEY!)
+                    .toString(CryptoJS.enc.Utf8) === body.password
         ) {
             userdata = db.data!.data[i];
             found = true;
@@ -44,13 +47,14 @@ export async function POST(request: Request) {
         });
     }
 
-    let cookieMaxAge = body.remember ? 'max-age=' + (60 * 60 * 30) : ''
+    cookieMaxAge = body.remember ? 'max-age=' + (60 * 60 * 24 * 30) : ''
     jwtSign = jwt.sign({
         id: userdata?.id,
     }, process.env.APP_KEY!, {
-        expiresIn: '1h'
+        expiresIn: body.remember ? '30d' : '30m'
     });
 
+    log.add('info', `${userdata?.id} logged in`);
 
     return responseBuilder(true, {}, {
         headers: {
