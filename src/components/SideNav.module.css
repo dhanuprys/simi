@@ -1,0 +1,83 @@
+.container {
+    flex: 20%;
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+}
+
+.navigation {
+    flex-basis: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    padding: 1rem;
+    padding-right: 0;
+}
+
+.navigationGroup {
+    margin-bottom: 1rem;
+}
+
+.navigationGroup .navigationTitle {
+    font-weight: bold;
+    font-size: larger;
+}
+
+.navigationGroup .navigationList {
+    list-style: none;
+}
+
+.navigationGroup .navigationTitle, .navigationGroup .navigationList > li {
+    margin-bottom: 0.3rem;
+}
+
+.navigationGroup .navigationList li {
+    padding-top: 0.5rem;
+    padding-bottom: 0.8rem;
+    /* background: white; */
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    transition: 300ms;
+}
+
+.navigationGroup .navigationList li.active,
+.navigationGroup .navigationList li:hover {
+    transition: 500ms;
+    padding-left: 1rem;
+    background: white;
+}
+
+.backToDevice {
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
+    flex-basis: auto;
+    background: blue;
+}
+
+@media screen and (max-width: 1280px) {
+    .container {
+        transition: 300ms;
+        position: fixed;
+        min-width: 30%;
+        min-height: 100%;
+        z-index: 99;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .container {
+        min-width: 40%;
+    }
+}
+
+@media screen and (max-width: 840px) {
+    .container {
+        min-width: 50%;
+    }
+}
+
+@media screen and (max-width: 412px) {
+    .container {
+        min-width: 100%;
+    }
+}

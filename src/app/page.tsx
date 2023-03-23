@@ -1,6 +1,6 @@
-import styles from './page.module.css';
+'use client';
 
-export default async function Home() {
+export default function Home() {
   return (
     <>hello</>
   )

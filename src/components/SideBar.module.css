@@ -1,0 +1,83 @@
+.container {
+    width: 250px;
+    background-color: var(--primary);
+    max-height: 100vh;
+    overflow: auto;
+    transition: all 1s;
+}
+
+.container .logoContainer {
+    line-height: 70px;
+    text-align: center;
+}
+
+.container .logo {
+    vertical-align: middle;
+}
+
+.container .navigation .group .title {
+    font-size: smaller;
+    font-weight: bolder;
+    padding: 1rem;
+    color: var(--primary-negative);
+}
+
+.container .navigation .group .list .item.active {
+    color: var(--light);
+}
+
+.container .navigation .group .list .item {
+    font-size: 14px;
+    padding: .5rem 1rem .8rem 1.3rem;
+    display: flex;
+    align-items: center;
+    color: var(--sidebar-item-color);
+}
+
+.container .navigation .group .list .item .label {
+    margin-left: .5rem;
+}
+
+.container .navigation .group .list .item:hover {
+    cursor: pointer;
+    color: var(--light);
+}
+
+.container .navigation .group .list .item .forward {
+    margin-left: auto;
+}
+
+.container .navigation .group {
+    border-bottom: 0;
+}
+
+@media screen and (max-width: 1280px) and (min-width: 871px) {
+    .container {
+        transition: 1s;
+        width: auto;
+    }
+
+    .container .navigation .group {
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--primary-negative);
+    }
+
+    .container .navigation .group .title,
+    .container .navigation .group .list .item .label,
+    .container .navigation .group .list .item .forward {
+        display: none;
+    }
+
+    .container .navigation .group .list .item {
+        padding: .5rem 1.3rem;
+    }
+}
+
+@media screen and (max-width: 870px) {
+    .container {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100%;
+    }
+}

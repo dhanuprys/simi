@@ -1,0 +1,42 @@
+.container {
+    min-height: 200vh;
+    padding: 1rem;
+    /* background: black; */
+    display: flex;
+    flex-direction: column;
+}
+
+.general {
+    display: flex;
+}
+
+.general .item {
+    margin: 0.5rem;
+    padding: 1rem;
+    background: var(--default-bg-positive);
+    border-radius: var(--border-radius);
+    flex-basis: 100%;
+    box-shadow: var(--thin-shadow);
+}
+
+.advance {
+    display: flex;
+}
+
+.advance .performance {
+    flex: 70%;
+    border-radius: var(--border-radius);
+    margin: .5rem;
+    padding: 1rem;
+    background: var(--default-bg-positive);
+    box-shadow: var(--thin-shadow);
+}
+
+.advance .log {
+    flex: 30%;
+    border-radius: var(--border-radius);
+    margin: .5rem;
+    padding: 1rem;
+    background: var(--default-bg-positive);
+    box-shadow: var(--thin-shadow);
+}

@@ -35,6 +35,7 @@ const port = 3000;
 
 const app = next({
     dev: process.env.APP_ENV !== 'production',
+    // dev: false,
     hostname,
     port
 });
