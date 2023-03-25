@@ -4,9 +4,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import navbarSlice from './navbarSlice';
 import dashboardSlice from './dashboardSlice';
 import pageSlice from './pageSlice';
+import profileSlice from './profileSlice';
 
 export const store = configureStore({
     reducer: {
+        profile: profileSlice,
         navbar: navbarSlice,
         dashboard: dashboardSlice,
         page: pageSlice

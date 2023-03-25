@@ -4,8 +4,10 @@
     max-height: 100vh;
     max-width: 100vw;
     display: flex;
+    font-family: sans-serif !important;
 }
 
 .content {
     flex: 1;
+    position: relative;
 }

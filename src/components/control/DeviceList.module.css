@@ -1,0 +1,100 @@
+.container {
+    padding: 1rem;
+}
+
+.toolbar {
+    display: flex;
+    background: var(--default-bg-positive);
+    border-radius: var(--border-radius);
+    box-shadow: var(--thin-shadow);
+    margin: .5rem;
+    padding: 1rem;
+}
+
+.deviceList {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    /* grid-template-columns: 5; */
+    flex-wrap: wrap;
+}
+
+.deviceList .item .header,
+.deviceList .item .content,
+.deviceList .item .footer {
+    padding: 1rem;
+}
+
+.deviceList .item {
+    /* flex: 1; */
+    margin: .5rem;
+    background: var(--default-bg-positive);
+    border-radius: var(--border-radius);
+    box-shadow: var(--thin-shadow);
+}
+
+.deviceList .item .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: small;
+}
+
+.deviceList .item .content {
+    display: flex;
+    border-bottom: .5px dashed var(--default-bg-negative);
+}
+
+.deviceList .item .content .boardImage {
+    border-radius: var(--border-radius);
+    background: var(--default-bg-negative);
+    padding: .2rem;
+    margin-right: .7rem;
+}
+
+.deviceList .item .content .info .name {
+    font-weight: bold;
+}
+
+.deviceList .item .content .info .description {
+    font-size: 14px;
+    color: grey;
+}
+
+.deviceList .item .footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.deviceList .item .footer .actionButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 1rem;
+    /* background: blue; */
+    border-radius: 50%;
+}
+
+.deviceList .item .footer .actionButton:hover {
+    color: var(--primary);
+    background: var(--primary-hover-bg);
+}
+
+@media screen and (max-width: 1110px) {
+    .deviceList {
+        grid-template-columns: auto auto auto;
+    }
+}
+
+@media screen and (max-width: 880px) {
+    .deviceList {
+        grid-template-columns: auto auto;
+    }
+}
+
+@media screen and (max-width: 570px) {
+    .deviceList {
+        grid-template-columns: auto;
+    }
+}

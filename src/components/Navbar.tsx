@@ -12,9 +12,11 @@ import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeIcon from '@mui/icons-material/WbSunnyOutlined';
 import FullscreenIcon from '@mui/icons-material/FullscreenOutlined';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExitOutlined';
+import SideBarIcon from '@mui/icons-material/DashboardCustomizeOutlined';
 
 export default function Navbar() {
     const dispatch = useDispatch();
+    const profile = useSelector((state: RootState) => state.profile);
     // const searchBarState = useSelector((state: RootState) => state.navbar.searchBar);
     // const searchBarValue = useSelector((state: RootState) => state.navbar.searchValue);
     const theme = useSelector((state: RootState) => state.page.theme);
@@ -58,7 +60,7 @@ export default function Navbar() {
             <div className={style.primary}>
                 <div className={style.left}>
                     <div className={style.sidebar}>
-                        SIDE
+                        <SideBarIcon />
                     </div>
                 </div>
                 <div className={style.right}>
@@ -80,15 +82,17 @@ export default function Navbar() {
                     <div className={style.profile}>
                         <Image className={style.picture} src="/thirteen.svg" alt="profile" width={32} height={32} />
                         <div className={style.name}>
-                            <h3 className={style.username}>Dhanu</h3>
-                            <span className={style.role}>Admin</span>
+                            <h3 className={style.username}>{profile.name}</h3>
+                            <span className={style.role}>@{profile.username}</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div className={style.location}>
                 <div className={style.highlight}>
-                    RouterOS v7.7
+                    <select className={style.board}>
+                        <option>RouterOS v7.8</option>
+                    </select>
                 </div>
                 <div className={style.path}>
                     Dashboard

@@ -19,6 +19,21 @@
   }
 }
 
+@font-face {
+  font-family: "Poppins";
+  src: url("/poppins-regular-webfont.woff") format("woff"),
+}
+
+@font-face {
+  font-family: "Poppins-SemiBold";
+  src: url("/poppins-semibold-webfont.woff") format("woff"),
+}
+
+@font-face {
+  font-family: "Poppins-Bold";
+  src: url("/poppins-bold-webfont.woff") format("woff"),
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -33,7 +48,7 @@ body {
 }
 
 body {
-  font-family: sans-serif;
+  font-family: "Poppins", sans-serif;
   /* color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,

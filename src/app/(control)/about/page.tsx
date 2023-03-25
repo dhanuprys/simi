@@ -1,6 +1,5 @@
 'use client';
 
-import { DashboardMonitor } from '@/components/DashboardMonitor';
 import MainPage from '@/components/MainPage';
 import { setDashboardContent, setDashboardName } from '@/store/dashboardSlice';
 import { useDispatch } from 'react-redux';

@@ -11,9 +11,9 @@ import UserIcon from '@mui/icons-material/PeopleAltOutlined';
 import AboutIcon from '@mui/icons-material/InfoOutlined';
 import LogIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import VirtualLogIcon from '@mui/icons-material/SatelliteAltOutlined';
+import RouterIcon from '@mui/icons-material/DashboardOutlined';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
-import Link from 'next/link';
 
 function NavItem({ 
     name, 
@@ -52,7 +52,18 @@ export default function SideBar() {
                 <div className={style.group}>
                     <h4 className={style.title}>DASHBOARD</h4>
                     <div className={style.list}>
-                        <NavItem name="dashboard.monitor" dashboardName={dashboardName} icon={<SpeedIcon />} location="/dashboard" label="Monitor" />
+                        <NavItem
+                            name="dashboard.monitor"
+                            dashboardName={dashboardName}
+                            icon={<SpeedIcon />}
+                            location="/dashboard"
+                            label="Monitor" />
+                        <NavItem
+                            name="dashboard.device"
+                            dashboardName={dashboardName}
+                            icon={<RouterIcon />}
+                            location="/device"
+                            label="Device" />
                     </div>
                 </div>
                 <div className={style.group}>

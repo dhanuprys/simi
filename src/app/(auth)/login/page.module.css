@@ -1,0 +1,88 @@
+.container {
+    background: var(--default-bg-negative);
+    min-height: 100vh;
+}
+
+.boxContainer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2.5rem 2rem;
+    width: 450px;
+    background: var(--default-bg-positive);
+    border-radius: var(--border-radius);
+}
+
+.boxContainer .group {
+    margin-bottom: 20px;
+}
+
+.boxContainer .group.header {
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+.boxContainer .group.header .greeting {
+    color: var(--primary);
+    /* font-size: large; */
+    margin-bottom: .5rem;
+}
+
+.boxContainer .group.header .greetingSecond {
+    font-size: small;
+    color: var(--primary-negative);
+}
+
+.boxContainer .group .alert {
+    list-style: none;
+    font-size: small;
+    color: var(--light);
+    background: red;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+}
+
+.boxContainer .group.form {
+
+}
+
+.boxContainer .group.form label {
+    font-size: small;
+    display: block;
+    padding-bottom: .5rem;
+}
+
+.boxContainer .group.form .field {
+    padding: .8rem 1rem;
+    width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: var(--thin-shadow);
+    border: 0;
+}
+
+.boxContainer .group.remember {
+    display: flex;
+    align-items: center;
+}
+
+.boxContainer .group.remember label {
+    padding-left: .5rem;
+    font-size: small;
+}
+
+.boxContainer .group .submit {
+    width: 100%;
+    background: var(--primary);
+    border-radius: var(--border-radius);
+    color: var(--light);
+    padding: .8rem;
+    text-align: center;
+    border: 0;
+}
+
+.boxContainer .group .submit:hover {
+    transition: var(--default-transition);
+    background-color: var(--primary-hover-bg);
+    color: var(--primary);
+}

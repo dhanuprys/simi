@@ -13,3 +13,5 @@ export async function GET(request: NextRequest) {
         data: await logging.read()
     });
 }
+
+export async function POST() {}

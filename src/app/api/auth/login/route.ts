@@ -1,10 +1,10 @@
-import jwt from 'jsonwebtoken';
 import process from 'process';
 import { Database_User, Database_UserList, Request_Login } from '@/interface';
 import { formInvalid, responseBuilder } from '@/libs/middleware';
 import Database, { LowMix } from '@/libs/Database';
 import log from '@/libs/Logging';
 import CryptoJS from 'crypto-js';
+import * as jose from 'jose';
 
 export async function POST(request: Request) {
     const db: LowMix<Database_UserList> = await Database.open('user');
@@ -48,11 +48,22 @@ export async function POST(request: Request) {
     }
 
     cookieMaxAge = body.remember ? 'max-age=' + (60 * 60 * 24 * 30) : ''
-    jwtSign = jwt.sign({
-        id: userdata?.id,
-    }, process.env.APP_KEY!, {
-        expiresIn: body.remember ? '30d' : '30m'
-    });
+    // jwtSign = jwt.sign({
+    //     id: userdata?.id,
+    // }, process.env.APP_KEY!, {
+    //     expiresIn: body.remember ? '30d' : '30m'
+    // });
+
+    const key = new TextEncoder().encode(process.env.APP_KEY!);
+
+    jwtSign = await new jose.SignJWT({
+        id: userdata?.id
+    }).setProtectedHeader({ alg: 'HS256' })
+        .setIssuedAt()
+        .setIssuer('simi:auth:login')
+        .setAudience('simi:auth:middleware')
+        .setExpirationTime(body. remember ? '30d' : '30m')
+        .sign(key);
 
     log.add('info', `${userdata?.id} logged in`);
 
