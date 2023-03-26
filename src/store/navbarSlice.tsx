@@ -3,11 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 const navbar = createSlice({
     name: 'navbar',
     initialState: {
-        height: 10,
+        height: 0,
         searchBar: false,
-        searchValue: ''
+        searchValue: '',
+        sidebar: true
     },
     reducers: {
+        setSidebar: (state, action) => {
+            state.sidebar = action.payload;
+        },
         setNavbarSearch: (state, action) => {
             state.searchBar = action.payload;
         },
@@ -21,6 +25,7 @@ const navbar = createSlice({
 });
 
 export const {
+    setSidebar,
     setNavbarValue,
     setNavbarSearch,
     setNavbarHeight

@@ -4,6 +4,7 @@ const path = require('path');
 const nextConfig = {
   experimental: {
     appDir: true,
+    esmExternals: false
   },
   webpack: {
     resolve: {

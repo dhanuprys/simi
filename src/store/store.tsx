@@ -5,9 +5,11 @@ import navbarSlice from './navbarSlice';
 import dashboardSlice from './dashboardSlice';
 import pageSlice from './pageSlice';
 import profileSlice from './profileSlice';
+import toastSlice from './toastSlice';
 
 export const store = configureStore({
     reducer: {
+        toast: toastSlice,
         profile: profileSlice,
         navbar: navbarSlice,
         dashboard: dashboardSlice,

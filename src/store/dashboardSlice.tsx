@@ -4,7 +4,7 @@ export const dashboard = createSlice({
     name: 'dashboard',
     initialState: {
         name: '',
-        content: <></>
+        content: <>Loading...</>
     },
     reducers: {
         setDashboardName: (state, action) => {

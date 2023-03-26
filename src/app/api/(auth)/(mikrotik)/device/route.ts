@@ -33,6 +33,7 @@ export async function POST(request: NextRequest) {
 
         if (
             body.name === undefined
+            || body.description === undefined
             || body.hostname === undefined
             || body.username === undefined 
             || body.password === undefined 
@@ -56,6 +57,7 @@ export async function POST(request: NextRequest) {
     db.data?.data.push({
         id: nanoid(),
         name: body.name,
+        description: body.description,
         hostname: body.hostname,
         username: body.username,
         password: body.password,
@@ -123,6 +125,7 @@ export async function PUT(request: NextRequest) {
         db.data!.data[i] = {
             id: body.id,
             name: body.name || current.name,
+            description: body.description || current.description,
             hostname: body.hostname || current.hostname,
             username: body.username || current.username,
             password: body.password || current.password,
@@ -161,6 +164,8 @@ export async function DELETE(request: NextRequest) {
 
     try {
         body = await request.json();
+
+        console.log(body);
 
         if (body.id === undefined) {
             return formInvalid();

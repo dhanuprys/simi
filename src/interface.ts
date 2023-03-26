@@ -46,6 +46,7 @@ export type Request_UpdateUser = Database_User;
 
 export type Request_AddDevice = {
     name: Database_DeviceItem['name'],
+    description: Database_DeviceItem['description'],
     hostname: Database_DeviceItem['hostname'],
     username: Database_DeviceItem['username'],
     password: Database_DeviceItem['password'],
@@ -86,6 +87,7 @@ export type Database_UserList = {
 export type Database_DeviceItem = {
     id: NanoId,
     name: string,
+    description: string,
     hostname: string,
     username: string,
     password: string,

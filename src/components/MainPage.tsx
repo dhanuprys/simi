@@ -8,6 +8,8 @@ import { RootState } from '@/store/store';
 import SideBar from './SideBar';
 import axios from 'axios';
 import { setProfile } from '@/store/profileSlice';
+import { setToast } from '@/store/toastSlice';
+import Toast from './Toast';
 
 export default function MainPage() {
     const dispatch = useDispatch();
@@ -17,6 +19,15 @@ export default function MainPage() {
     const dashboardContent = useSelector(
         (state: RootState) => state.dashboard.content
     );
+    const toast = useSelector((state: RootState) => state.toast);
+
+    useEffect(() => {
+        if (toast.show) {
+            setTimeout(() => {
+                dispatch(setToast(false))
+            }, 5000);
+        }
+    }, [toast]);
 
     useEffect(() => {
         axios.get('/api/me').then(user => {
@@ -35,6 +46,8 @@ export default function MainPage() {
             <div className={style.content}>
                 <Navbar />
                 <div style={{ position: 'relative', minHeight: `calc(100vh - ${navbarHeight}px)`, maxHeight: `calc(100vh - ${navbarHeight}px)`, overflowY: 'auto', background: 'var(--default-bg-negative)' }}>
+                    {/* { toast.show ? <Toast text={toast.text} /> : null } */}
+                    <Toast text="OK" />
                     {dashboardContent}
                 </div>
             </div>

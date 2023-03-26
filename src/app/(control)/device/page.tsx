@@ -1,6 +1,7 @@
 'use client';
 
 // import DeviceList from '@/components/control/DeviceList';
+import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import MainPage from '@/components/MainPage';
 import { setDashboardContent, setDashboardName } from '@/store/dashboardSlice';
@@ -12,8 +13,11 @@ const DeviceList = dynamic(() => import('@/components/control/DeviceList'), {
 
 export default function Dashboard() {
     const dispatch = useDispatch();
-    dispatch(setDashboardName('dashboard.device'));
-    dispatch(setDashboardContent(<DeviceList />));
+    
+    useEffect(() => {
+        dispatch(setDashboardName('dashboard.device'));
+        dispatch(setDashboardContent(<DeviceList />));
+    });
     
     return <MainPage />;
 }

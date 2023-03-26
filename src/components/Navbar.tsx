@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import style from './Navbar.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { setNavbarHeight, setNavbarSearch, setNavbarValue } from '@/store/navbarSlice';
+import { setNavbarHeight, setNavbarSearch, setNavbarValue, setSidebar } from '@/store/navbarSlice';
 import { RootState } from '@/store/store';
 import Image from 'next/image';
 import NotificationsIcon from '@mui/icons-material/NotificationsOutlined';
@@ -21,8 +21,7 @@ export default function Navbar() {
     // const searchBarValue = useSelector((state: RootState) => state.navbar.searchValue);
     const theme = useSelector((state: RootState) => state.page.theme);
     const [ isFullscreen, setFullscreen ] = useState(false);
-    // @ts-ignore
-    const navRef = useRef();
+    const navRef = useRef(null);
     const closeSearchBar = (e: MouseEvent) => {
         try {
             // @ts-ignore
@@ -55,11 +54,10 @@ export default function Navbar() {
     }, [navRef]);
 
     return (
-        // @ts-ignore
         <nav ref={navRef} className={style.container} onMouseDown={(e) => closeSearchBar(e)}>
             <div className={style.primary}>
                 <div className={style.left}>
-                    <div className={style.sidebar}>
+                    <div className={style.sidebar} onClick={() => dispatch(setSidebar(true))}>
                         <SideBarIcon />
                     </div>
                 </div>
@@ -90,7 +88,8 @@ export default function Navbar() {
             </div>
             <div className={style.location}>
                 <div className={style.highlight}>
-                    <select className={style.board}>
+                    { /* @ts-ignore */}
+                    <select className={style.board} onClick={(e) => { e.preventDefault(); window.location = '/device'}}>
                         <option>RouterOS v7.8</option>
                     </select>
                 </div>

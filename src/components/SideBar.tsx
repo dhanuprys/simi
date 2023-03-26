@@ -1,6 +1,7 @@
 'use client';
 
 import style from './SideBar.module.css';
+import { useEffect } from 'react';
 import SpeedIcon from '@mui/icons-material/SpeedOutlined';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import EditIcon from '@mui/icons-material/BorderColorOutlined';
@@ -12,8 +13,10 @@ import AboutIcon from '@mui/icons-material/InfoOutlined';
 import LogIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import VirtualLogIcon from '@mui/icons-material/SatelliteAltOutlined';
 import RouterIcon from '@mui/icons-material/DashboardOutlined';
-import { useSelector } from 'react-redux';
+import ClearIcon from '@mui/icons-material/Clear';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
+import { setSidebar } from '@/store/navbarSlice';
 
 function NavItem({ 
     name, 
@@ -41,10 +44,13 @@ function NavItem({
 }
 
 export default function SideBar() {
+    const dispatch = useDispatch();
     const dashboardName = useSelector((state: RootState) => state.dashboard.name);
+    const sideBarOpen = useSelector((state: RootState) => state.navbar.sidebar);
 
     return (
-        <div className={style.container}>
+        <div className={style.container} style={{ transform: sideBarOpen ? 'translateX(0)' : 'translateX(-100%)' }}>
+            <div className={style.toggleButton} onClick={() => dispatch(setSidebar(false))}><ClearIcon /></div>
             <div className={style.logoContainer}>
                 <img className={style.logo} src="/thirteen.svg" height={42} />
             </div>

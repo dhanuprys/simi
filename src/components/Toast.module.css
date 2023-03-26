@@ -1,0 +1,30 @@
+.container {
+    position: absolute;
+    right: 2rem;
+    bottom: 2rem;
+    color: white;
+    background: blue;
+    padding: .5rem 1rem;
+    border-radius: 50%;
+    animation: bloop 3s ease alternate forwards;
+}
+
+@keyframes bloop {
+    0% {
+        width: 30px;
+        height: 30px;
+        transform: translateY(100%);
+    }
+
+    20% {
+        border-radius: var(--border-radius);
+    }
+
+    30% {
+        height: auto;
+    }
+
+    100% {
+        width: auto;
+    }
+}
