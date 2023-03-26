@@ -1,7 +1,7 @@
 'use client';
 
 import style from './SideBar.module.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import SpeedIcon from '@mui/icons-material/SpeedOutlined';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import EditIcon from '@mui/icons-material/BorderColorOutlined';
@@ -47,9 +47,27 @@ export default function SideBar() {
     const dispatch = useDispatch();
     const dashboardName = useSelector((state: RootState) => state.dashboard.name);
     const sideBarOpen = useSelector((state: RootState) => state.navbar.sidebar);
+    const [ localSideBar, setLocalSideBar ] = useState(true);
+    let listener = function() {
+        console.log(window.innerWidth);
+        if (window.innerWidth > 870) {
+            setLocalSideBar(true);
+        } else {
+            setLocalSideBar(false);
+        }
+    };
+
+    useEffect(() => {
+        listener();
+        window.addEventListener('resize', listener);
+
+        return () => {
+            window.removeEventListener('resize', listener);
+        };
+    });
 
     return (
-        <div className={style.container} style={{ transform: sideBarOpen ? 'translateX(0)' : 'translateX(-100%)' }}>
+        <div className={style.container} style={{ transform: localSideBar ? 'translateX(0)' : (sideBarOpen ? 'translateX(0)' : 'translateX(-100%)') }}>
             <div className={style.toggleButton} onClick={() => dispatch(setSidebar(false))}><ClearIcon /></div>
             <div className={style.logoContainer}>
                 <img className={style.logo} src="/thirteen.svg" height={42} />
@@ -62,13 +80,13 @@ export default function SideBar() {
                             name="dashboard.monitor"
                             dashboardName={dashboardName}
                             icon={<SpeedIcon />}
-                            location="/dashboard"
+                            location="/a/dashboard"
                             label="Monitor" />
                         <NavItem
                             name="dashboard.device"
                             dashboardName={dashboardName}
                             icon={<RouterIcon />}
-                            location="/device"
+                            location="/a/device"
                             label="Device" />
                     </div>
                 </div>
@@ -79,25 +97,25 @@ export default function SideBar() {
                             name="hotspot.monitor"
                             dashboardName={dashboardName}
                             icon={<SpeedIcon />}
-                            location="/hotspot-monitor"
+                            location="/a/hotspot-monitor"
                             label="Monitor" />
                         <NavItem
                             name="hotspot.template"
                             dashboardName={dashboardName}
                             icon={<EditIcon />}
-                            location="/hotspot-template"
+                            location="/a/hotspot-template"
                             label="Template" />
                         <NavItem
                             name="hotspot.voucher"
                             dashboardName={dashboardName}
                             icon={<GiftIcon />}
-                            location="/voucher"
+                            location="/a/voucher"
                             label="Voucher" />
                         <NavItem
                             name="hotspot.template"
                             dashboardName={dashboardName}
                             icon={<VirtualLogIcon />}
-                            location="/hotspot-template"
+                            location="/a/hotspot-template"
                             label="Virtual Log" />
                     </div>
                 </div>
@@ -108,31 +126,31 @@ export default function SideBar() {
                             name="application.users"
                             dashboardName={dashboardName}
                             icon={<UserIcon />}
-                            location="/users"
+                            location="/a/users"
                             label="Users" />
                         <NavItem
                             name="application.notifications"
                             dashboardName={dashboardName}
                             icon={<NotificationsIcon />}
-                            location="/notifications"
+                            location="/a/notifications"
                             label="Notification" />
                         <NavItem
                             name="application.log"
                             dashboardName={dashboardName}
                             icon={<LogIcon />}
-                            location="/app-log"
+                            location="/a/app-log"
                             label="Log" />
                         <NavItem
                             name="application.settings"
                             dashboardName={dashboardName}
                             icon={<SettingsIcon />}
-                            location="/app-settings"
+                            location="/a/app-settings"
                             label="Settings" />
                         <NavItem
                             name="application.about"
                             dashboardName={dashboardName}
                             icon={<AboutIcon />}
-                            location="/about"
+                            location="/a/about"
                             label="About" />
                     </div>
                 </div>

@@ -10,21 +10,48 @@ import axios from 'axios';
 import { Database_DeviceItem } from '@/interface';
 import { useDispatch } from 'react-redux';
 import { showToast } from '@/store/toastSlice';
+import { setLoading } from '@/store/loadingSlice';
+import { setDevice } from '@/store/profileSlice';
 
-function DeviceItem({ id, name }: { id: string, name: string }) {
+function DeviceItem({ id, name, refresh }: { id: string, name: string, refresh: () => void }) {
+    const dispatch = useDispatch();
+    const currentDevice = localStorage.getItem('device_id');
+    const activateDevice = () => {
+        localStorage.setItem('device_id', id);
+        localStorage.setItem('device_name', name);
+
+        dispatch(setDevice({
+            id,
+            name
+        }));
+
+        refresh();
+    };
     const deleteDevice = () => {
+        dispatch(setLoading(true));
         axios.delete('/api/device', {
             data: {
                 id
             }
         }).then(response => {
-            // if ()
+            if (response.data.success) {
+                refresh();
+
+                dispatch(showToast({
+                    text: 'Berhasil menghapus perangkat',
+                    duration: 4000
+                }));
+            }
+        }).catch(() => {
+
+        }).finally(() => {
+            dispatch(setLoading(false));
         });
     };
 
     return (
         <div className={style.item}>
-            <div className={style.header}>
+            <div className={`${style.header} ${id === currentDevice ? style.active : null}`}>
                 <span>Updated 3 years ago</span>
                 <StarOutlineOutlinedIcon />
             </div>
@@ -43,7 +70,7 @@ function DeviceItem({ id, name }: { id: string, name: string }) {
                 </div>
                 <div style={{ display: 'flex' }}>
                     <div className={style.actionButton} style={{ marginRight: '.5rem' }}><EditIcon /></div>
-                    <div className={style.actionButton}><ConnectIcon /></div>
+                    <div className={style.actionButton} onClick={activateDevice}><ConnectIcon /></div>
                 </div>
             </div>
         </div>
@@ -53,19 +80,26 @@ function DeviceItem({ id, name }: { id: string, name: string }) {
 export default function DeviceList() {
     const dispatch = useDispatch();
     const [ devices, setDevices ] = useState([]);
-
-    useEffect(() => {
+    const requestDeviceList = () => {
+        dispatch(setLoading(true));
         axios.get('/api/device').then(response => {
             if (response.data.success) {
                 setDevices(response.data.payload.data);
             }
+        }).finally(() => {
+            dispatch(setLoading(false));
         });
-    }, []);
+    };
 
-    dispatch(showToast({
-        text: 'HELLO',
-        duration: 1000
-    }));
+    useEffect(() => {
+        requestDeviceList();
+
+        let i = setInterval(requestDeviceList, 10000);
+
+        return () => {
+            clearInterval(i);
+        }
+    }, []);
 
     return (
         <div className={style.container}>
@@ -78,7 +112,8 @@ export default function DeviceList() {
                         return <DeviceItem
                             key={device.id}
                             id={device.id}
-                            name={device.name} />
+                            name={device.name}
+                            refresh={requestDeviceList} />
                     })
                 }
             </div>

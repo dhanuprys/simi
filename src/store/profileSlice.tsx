@@ -6,7 +6,11 @@ export const profile = createSlice({
         ready: false,
         name: 'Loading',
         username: 'Loading',
-        access: ''
+        access: '',
+        device: {
+            id: null,
+            name: null
+        },
     },
     reducers: {
         setProfile: (state, action) => {
@@ -14,11 +18,15 @@ export const profile = createSlice({
             state.name = action.payload.name;
             state.username = action.payload.username;
             state.access = action.payload.access;
+        },
+        setDevice: (state, action) => {
+            state.device = action.payload;
         }
     }
 });
 
 export const {
-    setProfile
+    setProfile,
+    setDevice
 } = profile.actions;
 export default profile.reducer;

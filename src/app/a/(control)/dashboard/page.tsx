@@ -10,9 +10,11 @@ export default function Dashboard() {
     const dispatch = useDispatch();
     
     useEffect(() => {
+        
+
         dispatch(setDashboardName('dashboard.monitor'));
         dispatch(setDashboardContent(<DashboardMonitor />));
     });
     
-    return <MainPage />;
+    return <MainPage antiDevice={false} />;
 }

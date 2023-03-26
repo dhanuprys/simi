@@ -20,9 +20,10 @@ export default function Navbar() {
     // const searchBarState = useSelector((state: RootState) => state.navbar.searchBar);
     // const searchBarValue = useSelector((state: RootState) => state.navbar.searchValue);
     const theme = useSelector((state: RootState) => state.page.theme);
+    const deviceName = useSelector((state: RootState) => state.profile.device.name);
     const [ isFullscreen, setFullscreen ] = useState(false);
     const navRef = useRef(null);
-    const closeSearchBar = (e: MouseEvent) => {
+    const closeSearchBar = (e: any) => {
         try {
             // @ts-ignore
             if (e.target.attributes.datatype.value === 'sr-container' || e.target.attributes.datatype.value === 'sr-input') {
@@ -54,7 +55,7 @@ export default function Navbar() {
     }, [navRef]);
 
     return (
-        <nav ref={navRef} className={style.container} onMouseDown={(e) => closeSearchBar(e)}>
+        <nav ref={navRef} className={style.container} onMouseDown={closeSearchBar}>
             <div className={style.primary}>
                 <div className={style.left}>
                     <div className={style.sidebar} onClick={() => dispatch(setSidebar(true))}>
@@ -67,7 +68,7 @@ export default function Navbar() {
                             { theme !== 'dark' ? <LightModeIcon />  : <DarkModeIcon /> }
                         </li>
                         { /* @ts-ignore */ }
-                        <li className={style.buttonItem} onClick={() => window.location = '/notifications'}>
+                        <li className={style.buttonItem} onClick={() => window.location = '/a/notifications'}>
                             <NotificationsIcon/>
                         </li>
                         <li className={`${style.buttonItem} ${style.settings}`}>
@@ -89,8 +90,8 @@ export default function Navbar() {
             <div className={style.location}>
                 <div className={style.highlight}>
                     { /* @ts-ignore */}
-                    <select className={style.board} onClick={(e) => { e.preventDefault(); window.location = '/device'}}>
-                        <option>RouterOS v7.8</option>
+                    <select className={style.board} onClick={(e) => { e.preventDefault(); window.location = '/a/device'}}>
+                        <option>{deviceName}</option>
                     </select>
                 </div>
                 <div className={style.path}>

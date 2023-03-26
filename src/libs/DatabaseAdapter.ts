@@ -1,12 +1,8 @@
 import fs from 'fs/promises';
-// import path from 'path';
+import path from 'path';
 import process from 'process';
 import CryptoJS from 'crypto-js';
 import { encrypt, decrypt } from './encryption';
-
-const path = {
-    join: (d: string, a: string) => d + '/' + a
-}
 
 export default class DatabaseAdapter {
     private filePath: string;

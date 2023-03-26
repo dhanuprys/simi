@@ -39,6 +39,11 @@
     font-size: small;
 }
 
+.deviceList .item .header.active {
+    background: var(--primary);
+    color: var(--light);
+}
+
 .deviceList .item .content {
     display: flex;
     border-bottom: .5px dashed var(--default-bg-negative);

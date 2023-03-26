@@ -19,5 +19,5 @@ export default function Dashboard() {
         dispatch(setDashboardContent(<DeviceList />));
     });
     
-    return <MainPage />;
+    return <MainPage antiDevice={true} />;
 }

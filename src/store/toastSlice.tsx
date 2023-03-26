@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const toast = createSlice({
     name: 'toast',
     initialState: {
-        show: true,
+        show: false,
         text: '',
         duration: 1000
     },

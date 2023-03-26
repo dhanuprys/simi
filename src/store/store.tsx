@@ -6,9 +6,11 @@ import dashboardSlice from './dashboardSlice';
 import pageSlice from './pageSlice';
 import profileSlice from './profileSlice';
 import toastSlice from './toastSlice';
+import loadingSlice from './loadingSlice';
 
 export const store = configureStore({
     reducer: {
+        loading: loadingSlice,
         toast: toastSlice,
         profile: profileSlice,
         navbar: navbarSlice,
@@ -26,5 +28,5 @@ export const store = configureStore({
         }),
 });
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

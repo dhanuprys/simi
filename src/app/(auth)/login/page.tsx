@@ -9,13 +9,22 @@ export default function Login() {
     const passwordRef = useRef<HTMLInputElement>(null);
     const rememberRef = useRef<HTMLInputElement>(null);
 
+    const [ formDisable, setFormDisable ] = useState(false);
     const [ errors, setErrors ] = useState([]);
     let allowLogin = true;
+
+    const listenSubmit = (event: any) => {
+        console.log(event);
+        if (event.keyCode === 13) {
+            doLogin();
+        }
+    }
 
     const doLogin = async () => {
         if (!allowLogin) return;
 
         allowLogin = false;
+        setFormDisable(true);
 
         const result = (await axios.post('/api/auth/login', {
             username: usernameRef.current!.value,
@@ -27,17 +36,16 @@ export default function Login() {
 
         if (result.success) {
             // @ts-ignore
-            window.location = '/dashboard';
+            window.location = '/a/dashboard';
             return;
         }
 
         setErrors(result.payload.message);
+        setFormDisable(false);
     };
 
-    console.log(errors);
-
     return (
-        <div className={style.container}>
+        <div className={style.container} onKeyDown={listenSubmit}>
             <div className={style.boxContainer}>
                 <div className={`${style.group} ${style.header}`}>
                     <div className={style.greeting}>Selamat Datang !</div>
@@ -57,14 +65,14 @@ export default function Login() {
                 }
                 <div className={`${style.group} ${style.form}`}>
                     <label>Username</label>
-                    <input ref={usernameRef} className={style.field} type="text" placeholder="Masukkan username" />
+                    <input ref={usernameRef} disabled={formDisable} className={style.field} type="text" placeholder="Masukkan username" />
                 </div>
                 <div className={`${style.group} ${style.form}`}>
                     <label>Password</label>
-                    <input ref={passwordRef} className={style.field} type="password" placeholder="Masukkan username" />
+                    <input ref={passwordRef} disabled={formDisable} className={style.field} type="password" placeholder="Masukkan username" />
                 </div>
                 <div className={`${style.group} ${style.remember}`}>
-                    <input ref={rememberRef} className={style.field} type="checkbox" />
+                    <input ref={rememberRef} disabled={formDisable} className={style.field} type="checkbox" />
                     <label>Ingat saya</label>
                 </div>
                 <div className={`${style.group}`} onClick={doLogin}>

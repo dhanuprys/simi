@@ -6,7 +6,7 @@ const navbar = createSlice({
         height: 0,
         searchBar: false,
         searchValue: '',
-        sidebar: true
+        sidebar: false
     },
     reducers: {
         setSidebar: (state, action) => {

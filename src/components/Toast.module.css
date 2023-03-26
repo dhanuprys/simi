@@ -5,15 +5,16 @@
     color: white;
     background: blue;
     padding: .5rem 1rem;
-    border-radius: 50%;
-    animation: bloop 3s ease alternate forwards;
+    animation: bloop 1.5s ease alternate forwards;
 }
 
 @keyframes bloop {
     0% {
+        border-radius: 50%;
         width: 30px;
         height: 30px;
         transform: translateY(100%);
+        color: transparent;
     }
 
     20% {
@@ -24,7 +25,14 @@
         height: auto;
     }
 
+    80% {
+        width: 30px;
+        color: transparent;
+    }
+
     100% {
         width: auto;
+        color: var(--light);
+        border-radius: var(--border-radius);
     }
 }
