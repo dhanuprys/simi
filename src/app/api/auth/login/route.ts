@@ -1,5 +1,5 @@
 import process from 'process';
-import { Database_User, Database_UserList, Request_Login } from '@/interface';
+import { Database_User, Database_UserList, FallbackCode, Request_Login } from '@/interface';
 import { formInvalid, responseBuilder } from '@/libs/middleware';
 import Database, { LowMix } from '@/libs/Database';
 import log from '@/libs/Logging';
@@ -67,7 +67,7 @@ export async function POST(request: Request) {
 
     log.add('info', `${userdata?.id} logged in`);
 
-    return responseBuilder(true, {}, {
+    return responseBuilder(true, {}, FallbackCode.AUTHENTICATED, {
         headers: {
             'Set-cookie': 'token=' + jwtSign + '; path=/; ' + cookieMaxAge
         }

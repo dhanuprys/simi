@@ -23,13 +23,15 @@ function NavItem({
     dashboardName, 
     icon, 
     label,
-    location
+    location,
+    soon = false
 }: { 
     name: string, 
     dashboardName: string, 
     icon: any, 
     label: string,
-    location: string
+    location: string,
+    soon?: boolean
 }) {
     return (
         <div 
@@ -37,7 +39,7 @@ function NavItem({
             // @ts-ignore
             onClick={() => window.location = location}>
             {icon}
-            <span className={style.label}>{label}</span>
+            <div className={style.label}>{label} { soon ? <span className={style.badge}>soon</span> : null }</div>
             <KeyboardArrowRightIcon className={style.forward} fontSize="small" />
         </div>
     );
@@ -49,7 +51,6 @@ export default function SideBar() {
     const sideBarOpen = useSelector((state: RootState) => state.navbar.sidebar);
     const [ localSideBar, setLocalSideBar ] = useState(true);
     let listener = function() {
-        console.log(window.innerWidth);
         if (window.innerWidth > 870) {
             setLocalSideBar(true);
         } else {
@@ -70,7 +71,8 @@ export default function SideBar() {
         <div className={style.container} style={{ transform: localSideBar ? 'translateX(0)' : (sideBarOpen ? 'translateX(0)' : 'translateX(-100%)') }}>
             <div className={style.toggleButton} onClick={() => dispatch(setSidebar(false))}><ClearIcon /></div>
             <div className={style.logoContainer}>
-                <img className={style.logo} src="/thirteen.svg" height={42} />
+                {/* <img className={style.logo} src="/logo-fluid.svg" width={50} /> */}
+                <img className={style.logoSmall} src="/logo-white.svg" width={50} />
             </div>
             <div className={style.navigation}>
                 <div className={style.group}>
@@ -104,7 +106,8 @@ export default function SideBar() {
                             dashboardName={dashboardName}
                             icon={<EditIcon />}
                             location="/a/hotspot-template"
-                            label="Template" />
+                            label="Template"
+                            soon={true} />
                         <NavItem
                             name="hotspot.voucher"
                             dashboardName={dashboardName}
@@ -116,7 +119,8 @@ export default function SideBar() {
                             dashboardName={dashboardName}
                             icon={<VirtualLogIcon />}
                             location="/a/hotspot-template"
-                            label="Virtual Log" />
+                            label="Virtual Log"
+                            soon={true} />
                     </div>
                 </div>
                 <div className={style.group}>
@@ -133,7 +137,8 @@ export default function SideBar() {
                             dashboardName={dashboardName}
                             icon={<NotificationsIcon />}
                             location="/a/notifications"
-                            label="Notification" />
+                            label="Notification"
+                            soon={true} />
                         <NavItem
                             name="application.log"
                             dashboardName={dashboardName}
@@ -145,7 +150,8 @@ export default function SideBar() {
                             dashboardName={dashboardName}
                             icon={<SettingsIcon />}
                             location="/a/app-settings"
-                            label="Settings" />
+                            label="Settings"
+                            soon={true} />
                         <NavItem
                             name="application.about"
                             dashboardName={dashboardName}

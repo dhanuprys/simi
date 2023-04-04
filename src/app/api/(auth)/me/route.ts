@@ -1,6 +1,6 @@
 import { type NextRequest } from 'next/server';
 import Database from '@/libs/Database';
-import type { Database_User, Database_UserList, Response_Blank, Response_GeneralData } from '@/interface';
+import { Database_User, Database_UserList, FallbackCode, Response_Blank, Response_GeneralData } from '@/interface';
 import middleware from '@/libs/middleware';
 
 export async function GET(request: NextRequest) {
@@ -16,11 +16,11 @@ export async function GET(request: NextRequest) {
             
             return middleware.responseBuilder<Response_GeneralData<Database_User>>(true, {
                 data: dump
-            });
+            }, FallbackCode.AUTHENTICATED);
         }
     }
 
-    return middleware.responseBuilder<Response_Blank>(true, {}, {
+    return middleware.responseBuilder<Response_Blank>(true, {}, FallbackCode.NOT_AUTHENTICATED, {
         headers: {
             'Set-cookie': 'token=; max-age=0; path=/'
         }

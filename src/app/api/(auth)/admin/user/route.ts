@@ -30,8 +30,8 @@ export async function POST(request: NextRequest) {
     let errorMessage: string[] = [];
     let generatedId = nanoid();
 
-    if (!auth) return middleware.notAuthenticated();
-    if (auth.access === 'readonly') return middleware.rejectReadonly();
+    // if (!auth) return middleware.notAuthenticated();
+    // if (auth.access === 'readonly') return middleware.rejectReadonly();
 
     try {
         body = await request.json();
@@ -61,13 +61,13 @@ export async function POST(request: NextRequest) {
         }
     }
 
-    if (body.username.length < 5) {
-        errorMessage.push('Username minimal memiliki 5 karakter');
-    }
+    // if (body.username.length < 5) {
+    //     errorMessage.push('Username minimal memiliki 5 karakter');
+    // }
 
-    if (body.password.length < 8) {
-        errorMessage.push('Password minimal memiliki 8 karakter');
-    }
+    // if (body.password.length < 8) {
+    //     errorMessage.push('Password minimal memiliki 8 karakter');
+    // }
 
     if (!['full', 'semi-full', 'readonly'].includes(body.access)) {
         errorMessage.push('Akses user harus sesuai');

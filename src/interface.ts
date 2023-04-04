@@ -2,6 +2,16 @@ export type NanoId = string;
 
 export type Response_Blank = {};
 
+export enum FallbackCode {
+    NONE,
+    AUTHENTICATED,
+    NOT_AUTHENTICATED,
+    DEVICE_NOT_FOUND,
+    DEVICE_NOT_REACHABLE,
+    USER_NOT_FOUND,
+    LOGOUT
+}
+
 export type Response_GeneralMessage = {
     message: string[]
 }
@@ -20,7 +30,8 @@ export type Request_Query = {
     queries: {
         label: string,
         command: string,
-        args: string[]
+        args: string[],
+        bypass: boolean
     }[]
 }
 

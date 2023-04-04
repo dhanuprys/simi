@@ -6,17 +6,83 @@
     flex-direction: column;
 }
 
+.header {
+    font-size: small;
+    padding: 1rem;
+    border-bottom: .5px solid var(--default-bg-negative);
+    font-weight: bold;
+}
+
+.content {
+    padding: 1rem;
+}
+
 .general {
-    display: flex;
+    display: grid;
+    grid-template-columns: max-content max-content auto;
 }
 
 .general .item {
     margin: 0.5rem;
-    padding: 1rem;
     background: var(--default-bg-positive);
     border-radius: var(--border-radius);
-    flex-basis: 100%;
     box-shadow: var(--thin-shadow);
+}
+
+.general .item .board {
+    display: flex;
+    align-items: center;
+}
+
+.general .item .load .label {
+    font-size: smaller;
+    padding-bottom: .1rem;
+}
+
+.general .item .load .loadContainer {
+    display: flex;
+    align-items: center;
+    font-size: smaller;
+    color: grey;
+}
+
+.general .item .load .loadView {
+    width: 350px;
+    height: 4px;
+    background: grey;
+    position: relative;
+    margin-right: .5rem;
+}
+
+.general .item .load .loadValue {
+    background: red;
+    height: inherit;
+}
+
+.general .item .load .loadView,
+.general .item .load .loadValue {
+    border-radius: var(--border-radius);
+}
+
+.boardStatsContainer {
+    margin-left: 1rem;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.boardStats {
+    margin-bottom: .5rem;
+    padding-right: 1rem;
+}
+
+.boardStatsContainer .key {
+    font-size: small;
+    font-weight: bold;
+    display: block;
+}
+
+.boardStatsContainer .value {
+    font-size: small;
 }
 
 .advance {
@@ -27,8 +93,20 @@
     flex: 70%;
     border-radius: var(--border-radius);
     margin: .5rem;
-    padding: 1rem;
     background: var(--default-bg-positive);
+    box-shadow: var(--thin-shadow);
+}
+
+.advance .performance .header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.advance .interfaceSelect {
+    background: var(--default-bg-positive);
+    border-radius: var(--border-radius);
+    padding: .5rem 1rem;
+    border: 0;
     box-shadow: var(--thin-shadow);
 }
 
@@ -36,7 +114,67 @@
     flex: 30%;
     border-radius: var(--border-radius);
     margin: .5rem;
-    padding: 1rem;
+    height: 100%;
     background: var(--default-bg-positive);
     box-shadow: var(--thin-shadow);
+}
+
+.log .content {
+    max-height: 300px;
+    overflow: auto;
+    margin-bottom: .5rem;
+}
+
+.log .logSection {
+    display: flex;
+    align-items: center;
+}
+
+.log .logCircle {
+    width: 8px;
+    height: 8px;
+    background: var(--primary);
+    border-radius: 50%;
+}
+
+.log .logMessage {
+    margin-left: .5rem;
+    word-wrap: break-word;
+    font-size: smaller;
+}
+
+@media screen and (max-width: 1280px) {
+    .general {
+        grid-template-columns: 50% 50%;
+    }
+
+    .general .item .load .loadView {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 820px) {
+    .container {
+        padding: .5rem;
+    }
+
+    .general {
+        grid-template-columns: auto;
+    }
+
+    .general .item .board .product {
+        width: 150px;
+        height: 150px;
+        padding: 1rem;
+    }
+
+    .advance {
+        flex-wrap: wrap;
+    }
+}
+
+@media screen and (max-width: 412px) {
+    .boardStatsContainer {
+        grid-template-columns: auto;
+    }
 }

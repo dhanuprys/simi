@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Routeros } from 'routeros-node';
+import { Routeros, RouterosException } from 'routeros-node';
 import Database from '@/libs/Database';
 import { 
     Database_DeviceItem,
     Database_DeviceList,
+    FallbackCode,
     Request_Query,
     Response_GeneralData,
     Response_GeneralMessage 
 } from '@/interface';
-import middleware from '@/libs/middleware';
+import log from '@/libs/Logging';
+import middleware, { responseBuilder } from '@/libs/middleware';
 
 export async function POST(request: NextRequest) {
     const db = await Database.open<Database_DeviceList>('device');
@@ -17,7 +19,6 @@ export async function POST(request: NextRequest) {
     let deviceCredential: Database_DeviceItem | null = null;
     let result: { [prop: string]: any } = {};
     let ros;
-    let conn;
 
     if (!auth) return middleware.notAuthenticated();
     if (auth.access === 'readonly') return middleware.rejectReadonly();
@@ -33,10 +34,8 @@ export async function POST(request: NextRequest) {
     }
 
     for (let i = 0; i < db.data!.data.length; i++) {
+        if (db.data!.data[i].id !== body.deviceId) continue;
         deviceCredential = db.data!.data[i];
-
-        if (deviceCredential.id !== body.deviceId) continue;
-
         break;
     }
 
@@ -45,7 +44,7 @@ export async function POST(request: NextRequest) {
             message: [
                 'Perangkat tidak ditemukan'
             ]
-        });
+        }, FallbackCode.DEVICE_NOT_FOUND);
     }
 
     if (deviceCredential.version === '7.x') {
@@ -57,11 +56,10 @@ export async function POST(request: NextRequest) {
     }
 
     ros = new Routeros({
-        host: '192.168.80.1',
-        user: 'admin',
-        password: 'admin',
-        port: 8728,
-        timeout: 3
+        host: deviceCredential.hostname,
+        user: deviceCredential.username,
+        password: deviceCredential.password,
+        port: Number(deviceCredential.port)
     });
     
     try {
@@ -69,16 +67,17 @@ export async function POST(request: NextRequest) {
 
         for (let i: number = 0; i < body.queries.length; i++) {
             let response = await conn.write([ body.queries[i].command, ...body.queries[i].args ]);
-            result[body.queries[i].label] = response.length <= 0 ? [] : response[0];
+            result[body.queries[i].label] = response.length <= 0 ? [] : body.queries[i].bypass ? response : response[0];
         }
 
         conn.destroy();
     } catch (e) {
-        console.log(e);
-        return NextResponse.json({
-            error: 1
-        });
+        return responseBuilder<Response_GeneralMessage>(false, {
+            message: ['Router tidak dapat dihubungi']
+        }, FallbackCode.DEVICE_NOT_REACHABLE);
     }
+
+    log.add('info', `Query requested`);
 
     return middleware.responseBuilder<Response_GeneralData>(true, {
         data: result

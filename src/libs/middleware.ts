@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import process from 'process'
 import Database from './Database';
-import { Database_User, Database_UserList, Response_GeneralMessage } from '@/interface';
+import { Database_User, Database_UserList, FallbackCode, Response_GeneralMessage } from '@/interface';
 import * as jose from 'jose';
 
 export async function parseToken(request: NextRequest): Promise<false | Database_User> {
@@ -37,12 +37,14 @@ export async function parseToken(request: NextRequest): Promise<false | Database
 }
 
 export function responseBuilder<T = any>(
-    success: boolean, 
-    payload: T, 
+    success: boolean,
+    payload: T,
+    code: FallbackCode = FallbackCode.NONE,
     init?: ResponseInit
 ) {
     return NextResponse.json({
         success,
+        code,
         payload
     }, init);
 }
@@ -52,6 +54,10 @@ export function notAuthenticated() {
         message: [
             'Not authenticated'
         ]
+    }, FallbackCode.NOT_AUTHENTICATED, {
+        headers: {
+            'Set-cookie': 'token=; max-age=0; path=/'
+        }
     });
 }
 

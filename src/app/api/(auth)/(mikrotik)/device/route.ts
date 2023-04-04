@@ -32,13 +32,14 @@ export async function POST(request: NextRequest) {
         body = await request.json();
 
         if (
-            body.name === undefined
+            body.name === undefined || body.name === ''
             || body.description === undefined
-            || body.hostname === undefined
-            || body.username === undefined 
+            || body.hostname === undefined || body.hostname === ''
+            || body.username === undefined || body.username === ''
             || body.password === undefined 
             || body.version === undefined
-            || body.port === undefined
+            // @ts-ignore
+            || body.port === undefined || body.port === ''
         ) {
             return middleware.formInvalid();
         }
@@ -54,7 +55,7 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    db.data?.data.push({
+    db.data?.data.unshift({
         id: nanoid(),
         name: body.name,
         description: body.description,
@@ -72,7 +73,7 @@ export async function POST(request: NextRequest) {
     } catch (e) {
         return responseBuilder<Response_GeneralMessage>(false, {
             message: [
-                'Gagal memperbarui perangkat'
+                'Gagal menambahkan perangkat'
             ]
         });
     }

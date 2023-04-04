@@ -15,12 +15,17 @@
 }
 
 .container .logoContainer {
-    line-height: 70px;
-    text-align: center;
+    padding-top: 2rem;
+    display: flex;
+    justify-content: center;
 }
 
 .container .logo {
     vertical-align: middle;
+}
+
+.container .logoSmall {
+    display: none;
 }
 
 .container .navigation .group .title {
@@ -46,6 +51,14 @@
     margin-left: .5rem;
 }
 
+.container .navigation .group .list .item .label .badge {
+    background: yellow;
+    border-radius: var(--border-radius);
+    padding: .1rem .4rem;
+    font-size: smaller;
+    /* color: var(--light) */
+}
+
 .container .navigation .group .list .item:hover {
     cursor: pointer;
     color: var(--light);
@@ -61,8 +74,16 @@
 
 @media screen and (max-width: 1280px) and (min-width: 871px) {
     .container {
-        transition: 1s;
+        transition: .5s;
         width: auto;
+    }
+
+    .container .logo {
+        display: none;
+    }
+
+    .container .logoSmall {
+        display: block;
     }
 
     .container .navigation .group {

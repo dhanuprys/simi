@@ -13,15 +13,21 @@ import LightModeIcon from '@mui/icons-material/WbSunnyOutlined';
 import FullscreenIcon from '@mui/icons-material/FullscreenOutlined';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExitOutlined';
 import SideBarIcon from '@mui/icons-material/DashboardCustomizeOutlined';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import axios from 'axios';
+import { Database_DeviceItem } from '@/interface';
+import { setDevice } from '@/store/profileSlice';
 
 export default function Navbar() {
     const dispatch = useDispatch();
     const profile = useSelector((state: RootState) => state.profile);
-    // const searchBarState = useSelector((state: RootState) => state.navbar.searchBar);
-    // const searchBarValue = useSelector((state: RootState) => state.navbar.searchValue);
     const theme = useSelector((state: RootState) => state.page.theme);
+    const deviceId = useSelector((state: RootState) => state.profile.device.id);
     const deviceName = useSelector((state: RootState) => state.profile.device.name);
+    const dashboardName = useSelector((state: RootState) => state.dashboard.name);
     const [ isFullscreen, setFullscreen ] = useState(false);
+    const [ deviceList, setDeviceList ] = useState<Database_DeviceItem[]>([]);
     const navRef = useRef(null);
     const closeSearchBar = (e: any) => {
         try {
@@ -48,11 +54,32 @@ export default function Navbar() {
             setFullscreen(true);
         }
     };
+    const activateDevice = (e: any) => {
+        let id = e.target.value;
+        let name = e.target.innerText;
+        localStorage.setItem('device_id', id);
+        localStorage.setItem('device_name', name);
+
+        dispatch(setDevice({
+            id,
+            name
+        }));
+
+        // window.location = window.location;
+    }
 
     useEffect(() => {
         // @ts-ignore
         dispatch(setNavbarHeight(navRef.current.clientHeight));
     }, [navRef]);
+
+    useEffect(() => {
+        axios.get('/api/device').then(response => {
+            if (!response.data.success) return;
+
+            setDeviceList(response.data.payload.data);
+        });
+    }, [deviceId]);
 
     return (
         <nav ref={navRef} className={style.container} onMouseDown={closeSearchBar}>
@@ -79,7 +106,7 @@ export default function Navbar() {
                         </li>
                     </ul>
                     <div className={style.profile}>
-                        <Image className={style.picture} src="/thirteen.svg" alt="profile" width={32} height={32} />
+                        <Image className={style.picture} src="/user.jpeg" alt="profile" width={32} height={32} />
                         <div className={style.name}>
                             <h3 className={style.username}>{profile.name}</h3>
                             <span className={style.role}>@{profile.username}</span>
@@ -89,32 +116,31 @@ export default function Navbar() {
             </div>
             <div className={style.location}>
                 <div className={style.highlight}>
-                    { /* @ts-ignore */}
-                    <select className={style.board} onClick={(e) => { e.preventDefault(); window.location = '/a/device'}}>
-                        <option>{deviceName}</option>
-                    </select>
+                    {
+                        deviceId !== null
+                        ? <select defaultValue={deviceId} className={style.board}>
+                        {
+                            deviceList.map(device => {
+                                return <option key={device.id} selected={deviceId === device.id} onClick={(e) => activateDevice(e)} value={device.id}>{device.name}</option>
+                            })
+                        }
+                        </select>
+                        : null
+                    }
+                    <div className={style.refresh} onClick={() => window.location = window.location}>
+                        <RefreshIcon />
+                    </div>
                 </div>
                 <div className={style.path}>
-                    Dashboard
+                    <ul>
+                    {
+                        dashboardName.split('.').map((sub, index) => {
+                            return <li key={index}>{sub} <ArrowForwardIosIcon style={{fontSize: '10px'}} /> </li>
+                        })
+                    }
+                    </ul>
                 </div>
             </div>
-            {/* <div className={style.sidenavToggle}>side</div>
-            <div className={style.logo} onClick={() => dispatch(setNavbarHeight(10))}>logo</div>
-            <div className={style.navigation}>
-                <div className={style.title} style={{ display: searchBarState ? 'none' : 'block' }} onMouseEnter={() => dispatch(setNavbarSearch(true))}>RouterOS v7.7 (Dhanu)</div>
-                <div datatype="sr-container" className={style.searchBar} style={{ display: searchBarState ? 'block' : 'none' }}>
-                    <input defaultValue={searchBarValue} onChange={(e) => dispatch(setNavbarValue(e.target.value))} datatype="sr-input" type="text" placeholder="Apa yang ingin anda cari?" />
-                </div>
-            </div>
-            <div className={style.account}>
-                <div onClick={toggleTheme} className={`${style.switchContainer} ${theme === 'dark' ? style.themeDark : ''}`}>
-                    <div className={style.ball}></div>
-                </div>
-                <div className={style.info}>
-                    <label style={{ marginRight: '5px' }}>Dhanu</label>
-                    <img className={style.profilePhoto} />
-                </div>
-            </div> */}
         </nav>
     );
 }

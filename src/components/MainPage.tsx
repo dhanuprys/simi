@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import style from './MainPage.module.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,6 +23,7 @@ export default function MainPage({ antiDevice = false }: { antiDevice?: boolean 
     );
     const toast = useSelector((state: RootState) => state.toast);
     const loading = useSelector((state: RootState) => state.loading.show);
+    const [showContent, setShowContent] = useState(false);
 
 
     if (!antiDevice) {
@@ -55,13 +56,13 @@ export default function MainPage({ antiDevice = false }: { antiDevice?: boolean 
 
     useEffect(() => {
         axios.get('/api/me').then(user => {
-            console.log(user);
             if (!user.data.success) {
                 // @ts-ignore
                 window.location = '/login';
             }
 
             dispatch(setProfile(user.data.payload.data));
+            setShowContent(true);
         }).catch(() => {});
     }, []);
 
@@ -70,11 +71,11 @@ export default function MainPage({ antiDevice = false }: { antiDevice?: boolean 
             <SideBar />
             <div className={style.content}>
                 <Navbar />
-                <div style={{ position: 'relative', minHeight: `calc(100vh - ${navbarHeight}px)`, maxHeight: `calc(100vh - ${navbarHeight}px)`, overflowY: 'auto', background: 'var(--default-bg-negative)' }}>
+                <div style={{ position: 'relative', minHeight: `calc(100vh - ${navbarHeight}px)`, maxHeight: `calc(100vh - ${navbarHeight}px)`, overflowY: 'auto', overflowX: 'hidden', background: 'var(--default-bg-negative)' }}>
                     { toast.show ? <Toast text={toast.text} /> : null }
                     { loading ? <Loading /> : null }
                     {/* <Toast text="OK" /> */}
-                    {dashboardContent}
+                    { showContent ? dashboardContent : null }
                 </div>
             </div>
         </div>
