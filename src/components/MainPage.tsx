@@ -71,7 +71,7 @@ export default function MainPage({ antiDevice = false }: { antiDevice?: boolean 
             <SideBar />
             <div className={style.content}>
                 <Navbar />
-                <div style={{ position: 'relative', minHeight: `calc(100vh - ${navbarHeight}px)`, maxHeight: `calc(100vh - ${navbarHeight}px)`, overflowY: 'auto', overflowX: 'hidden', background: 'var(--default-bg-negative)' }}>
+                <div style={{ position: 'relative', minHeight: `calc(100vh - ${navbarHeight}px)`, maxHeight: `calc(100vh - ${navbarHeight}px)`, maxWidth: '100vw', overflow: 'auto auto', overflowX: 'hidden', background: 'var(--default-bg-negative)' }}>
                     { toast.show ? <Toast text={toast.text} /> : null }
                     { loading ? <Loading /> : null }
                     {/* <Toast text="OK" /> */}

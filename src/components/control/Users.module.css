@@ -1,0 +1,111 @@
+.container {
+    padding: 1rem;
+}
+
+.toolbar {
+    display: flex;
+    margin: .5rem;
+}
+
+.toolbar .item {
+    padding: .5rem 1rem;
+    background: red;
+    background: var(--default-bg-positive);
+    border-radius: var(--border-radius);
+    box-shadow: var(--thin-shadow);
+    display: flex;
+    align-items: center;
+    user-select: none;
+}
+
+.toolbar .item:hover {
+    background: var(--primary-hover-bg);
+}
+
+.toolbar .item .icon {
+    margin-right: .5rem;
+}
+
+.userTableContainer {
+    width: 100%;
+    position: relative;
+    margin: 1rem .5rem;
+    padding-right: 1rem;
+    display: flex;
+}
+
+.userTable {
+    flex: 1;
+    font-size: small;
+    border-radius: var(--border-radius);
+    box-shadow: var(--thin-shadow);
+    background: var(--default-bg-positive);
+    border-radius: var(--border-radius);
+}
+
+.userTable thead {
+    font-weight: bold;
+}
+
+.userTable td {
+    padding: 1rem;
+}
+
+.addDeviceContainer {
+    margin: 1rem .5rem;
+    padding: 1rem 0;
+    background: var(--light);
+    box-shadow: var(--thin-shadow);
+    border-radius: var(--border-radius);
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.addDeviceContainer .left,
+.addDeviceContainer .right {
+    padding: 1rem;
+}
+
+.addDeviceContainer .field {
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.addDeviceContainer .field .label {
+    display: block;
+    font-size: small;
+    padding-bottom: .5rem;
+}
+
+.addDeviceContainer .field .form {
+    padding: .5rem 1rem;
+    border-radius: var(--border-radius);
+    border: 0;
+    box-shadow: var(--thin-shadow);
+    width: 100%;
+}
+
+.addDeviceContainer .field .textarea {
+    height: 100%;
+    width: 100%;
+    border: 0;
+    border-radius: var(--border-radius);
+    box-shadow: var(--thin-shadow);
+    padding: 1rem;
+}
+
+.addDeviceContainer .submitButton {
+    background: var(--primary);
+    margin: 0 1rem;
+    padding: .5rem 1rem;
+    display: flex;
+    justify-content: center;
+    border-radius: var(--border-radius);
+    color: var(--light)
+}
+
+@media screen and (max-width: 570px) {
+    .addDeviceContainer {
+        grid-template-columns: auto;
+    }
+}
